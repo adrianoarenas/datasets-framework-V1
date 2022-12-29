@@ -1,39 +1,43 @@
 import boto3
 import json
 from datetime import datetime
+from botocore.exceptions import ClientError
 
 secret_name = "secrets_test"
 region_name = "eu-west-2"
 
-bucket = "adriano-test-class-creation"
-dataset_name = "test-1"
 
 class getSecrets:
     def __init__(self, secret_name, region_name):
         self.secret_name = secret_name
         self.region_name = region_name
-        self.secrets = get_secret()
+        self.secrets = self.get_secret()
 
-        def get_secret():
-            session = boto3.session.Session()
-            client = session.client(
-                service_name='secretsmanager',
-                region_name=self.region_name
+    def get_secret(self):
+        session = boto3.session.Session()
+        client = session.client(
+            service_name='secretsmanager',
+            region_name=self.region_name
+        )
+
+        try:
+            get_secret_value_response = client.get_secret_value(
+                SecretId=self.secret_name
             )
+        except ClientError as e:
+            raise e
 
-            try:
-                get_secret_value_response = client.get_secret_value(
-                    SecretId=self.secret_name
-                )
-            except ClientError as e:
-                raise e
+        secret = get_secret_value_response['SecretString']
 
-            secret = get_secret_value_response['SecretString']
-
-            return json.loads(secret)
+        return json.loads(secret)
 
 
-def s3_load(bucket, dataset_name, json_string, access_key, secret_access_key):
+def s3_load(bucket, dataset_name, json_string):
+
+    secrets = getSecrets(secret_name, region_name)
+    access_key = secrets.secrets['accessKey']
+    secret_access_key = secrets.secrets['secretAccessKey']
+
     utcs_now = datetime.utcnow().strftime('%Y%m%d%H%M')
     client = boto3.client('s3',
                     aws_access_key_id = access_key,
@@ -45,7 +49,12 @@ def s3_load(bucket, dataset_name, json_string, access_key, secret_access_key):
     print(f"File {key} has been uploaded to S3")
 
 
-def list_s3_files(bucket, dataset_name, access_key, secret_access_key):
+def list_s3_files(bucket, dataset_name):
+
+    secrets = getSecrets(secret_name, region_name)
+    access_key = secrets.secrets['accessKey']
+    secret_access_key = secrets.secrets['secretAccessKey']
+
     s3 = boto3.resource('s3',
             aws_access_key_id = access_key,
             aws_secret_access_key = secret_access_key)
@@ -57,7 +66,12 @@ def list_s3_files(bucket, dataset_name, access_key, secret_access_key):
     return files
 
 
-def move_s3_file(bucket, dataset_name, object_name, access_key, secret_access_key):
+def move_s3_file(bucket, dataset_name, object_name):
+
+    secrets = getSecrets(secret_name, region_name)
+    access_key = secrets.secrets['accessKey']
+    secret_access_key = secrets.secrets['secretAccessKey']
+
     s3 = boto3.resource('s3',
                 aws_access_key_id = access_key,
                 aws_secret_access_key = secret_access_key)
