@@ -2,132 +2,15 @@ from datetime import timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 
-import requests
+
 from datetime import datetime
-from bs4 import BeautifulSoup
-from random import randint
-from time import sleep
+
 import pandas as pd
 from sqlalchemy import create_engine
 
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-
-
-def search_url(position):
-    template = 'https://uk.indeed.com/jobs?q={}&l=United+Kingdom&fromage=1'
-    final_url = template.format(position)
-    return (final_url)
-
-
-def get_job(card, search_query):
-    atag = card.h2.a
-    job_title = atag.get('title')
-    job_url = 'https://uk.indeed.com' + atag.get('href')
-    company = card.find('span', 'company').text.strip()
-
-    try:
-        location = card.find('div', 'recJobLoc').get('data-rc-loc')
-    except AttributeError:
-        location = '-'
-
-    try:
-        job_summary = card.find('div', 'summary').text.strip().replace('\n', ' ')
-    except AttributeError:
-        job_summary = '-'
-
-    posting_date = datetime.today().strftime('%Y-%m-%d')
-
-    try:
-        salary = card.find('span', 'salaryText').text.strip()
-    except AttributeError:
-        salary = '-'
-
-    # Description. As to get description we have to follow a link:
-    desc_template = 'https://www.indeed.com/viewjob?jk={}'
-
-    desc_data_jk = card.get('data-jk')
-    description_url = desc_template.format(desc_data_jk)
-    response_desc = requests.get(description_url)
-    soup_desc = BeautifulSoup(response_desc.text, 'html.parser')
-
-    try:
-        job_description = soup_desc.find('div', 'jobsearch-jobDescriptionText').text.strip().replace('\n', ' ')
-    except AttributeError:
-        job_description = '-'
-
-    job = (job_title, company, location, job_summary, job_description, salary, job_url, posting_date, search_query)
-
-    return (job)
-
-
-def scraped_to_frame(scraped_jobs):
-    job_title = []
-    company = []
-    location = []
-    summary = []
-    description = []
-    salary = []
-    job_url = []
-    posting_date = []
-    search_query = []
-
-    titles = [job_title, company, location, summary, description, salary, job_url, posting_date, search_query]
-
-    for Jobs in scraped_jobs:
-        job_title.append(Jobs[0])
-        company.append(Jobs[1])
-        location.append(Jobs[2])
-        summary.append(Jobs[3])
-        description.append(Jobs[4])
-        salary.append(Jobs[5])
-        job_url.append(Jobs[6])
-        posting_date.append(Jobs[7])
-        search_query.append(Jobs[8])
-
-    # Creating a Dictionary For all of the Saved Data
-    Job_Data = {'job_title': job_title, 'company': company, 'location': location, 'summary': summary,
-                'description': description, 'salary': salary, 'job_url': job_url, 'posting_date': posting_date,
-                'search_query': search_query}
-
-    return (pd.DataFrame(Job_Data))
-
-
-def create_dataframe():
-    column_names = ['job_title', 'company', 'location', 'summary', 'description',
-                    'salary', 'job_url', 'posting_date', 'search_query']
-    return (pd.DataFrame(columns=column_names))
-
-
-# Main Scraper
-def main(job_query):
-    jobs = []
-    # We create the url for the position we are looking for
-    url = search_url(job_query)
-
-    # Extracting the data
-    while True:
-        print(url)
-        # Get the html data
-        response = requests.get(url)
-        soup = BeautifulSoup(response.text, 'html.parser')
-        cards = soup.find_all('div', 'jobsearch-SerpJobCard')
-
-        for card in cards:
-            job = get_job(card, job_query)
-            jobs.append(job)
-
-        try:
-            url = 'https://uk.indeed.com' + soup.find('a', {'aria-label': 'Next'}).get('href')
-            delay = randint(10, 15)
-            sleep(delay)
-        except AttributeError:
-            break
-
-    job_frame = scraped_to_frame(jobs)
-
-    return (job_frame)
 
 
 # Scraping (excecute scraper) + removing duplicates
