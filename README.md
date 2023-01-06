@@ -47,20 +47,19 @@ The setup of this repo is the following:
 
 
 ```
-project
-│   README.md
-│   file001.txt    
+src 
 │
-└───folder1
-│   │   file011.txt
-│   │   file012.txt
-│   │
-│   └───subfolder1
-│       │   file111.txt
-│       │   file112.txt
-│       │   ...
+└───Dataset_1
+│   │   dag_task_1
+│   │   dag_task_2
+│   │   dag_task_3
 │   
-└───folder2
-    │   file021.txt
-    │   file022.txt
+│   
+└───Dataset_2
+│   │   dag_task_1
+│   │   dag_task_2
+│   │   ...
+│   │   dag_task_n
+│
+...
 ```
