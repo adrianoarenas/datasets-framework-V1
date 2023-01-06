@@ -24,16 +24,16 @@ The setup of this repo is the following:
 src 
 │
 └───Dataset_1
-│   │   dag_task_1
-│   │   dag_task_2
-│   │   dag_task_3
+│   │── dag_task_1.py
+│   │── dag_task_2.py
+│   │── dag_task_3.py
 │   
 │   
 └───Dataset_2
-│   │   dag_task_1
-│   │   dag_task_2
+│   │── dag_task_1.py
+│   │── dag_task_2.py
 │   │   ...
-│   │   dag_task_n
+│   │── dag_task_n.py
 │
 ...
 ```
