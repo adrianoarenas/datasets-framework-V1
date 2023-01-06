@@ -37,6 +37,9 @@ src
 ```
 
 
+
+
+
 As this is a *not* large scale process, I've used a simple mechanism to keep track of the already processed files:
 1. As you can see in the module, the function **s3_load** puts the raw file in a s3-bucket-name/dataset-name/*not_processed*/ location.
 2. Once the data of a file has been processed (i.e. loaded into the database), we use the function **move_s3_file** which moves the file to s3-bucket-name/dataset-name/*processed*/
