@@ -20,32 +20,6 @@ The setup of this repo is the following:
 - **src**: All transformation/processing scripts that would be referenced by the Airflow dags come here.
     Ideally we would keep the following structure to keep the repo clean:
 
-    src
-    |---Dataset_1
-    |   |- dag_task_1
-    |   |- dag_task_2
-    |   |- dag_task_3
-    |
-    |---Dataset_2
-   ...  |- dag_task_1
-        |- dag_task_2
-        |- ...
-        |- dag_task_n
-
-
- * src
-    * Dataset_1
-        * dag_task_1
-        * dag_task_2
-        * dag_task_3
-     * Dataset_2
-        * dag_task_1
-        * dag_task_2
-        * ...
-        * dag_task_n
-* ...
-
-
 ```
 src 
 │
