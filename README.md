@@ -36,9 +36,7 @@ src
 ...
 ```
 
-
-
-
+<br/><br/>
 
 As this is a *not* large scale process, I've used a simple mechanism to keep track of the already processed files:
 1. As you can see in the module, the function **s3_load** puts the raw file in a s3-bucket-name/dataset-name/*not_processed*/ location.
