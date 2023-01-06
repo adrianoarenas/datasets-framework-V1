@@ -1,6 +1,6 @@
 Please refer first to [data-pipeline-framework-V1](https://github.com/adrianoarenas/data-pipeline-framework-V1) for the architecture deployment repo.
 
-<br/><br/>
+<br/>
 
 # Adding, updating and deleting datasets in the ETL framework
 ---
