@@ -3,10 +3,6 @@ import json
 from datetime import datetime
 from botocore.exceptions import ClientError
 
-secret_name = "secrets_test"
-region_name = "eu-west-2"
-
-
 class getSecrets:
     def __init__(self, secret_name, region_name):
         self.secret_name = secret_name
