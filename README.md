@@ -15,8 +15,8 @@ Ideally all changes will be created in a feature branch and a PR to **main** wil
 The setup of this repo is the following:
 - **dags**: All Airflow dags will go in this folder, Airflow is setup to read the dags from here.
 - **modules**: For the sake of keeping this repo clean, any modules created come here. For now I created a module to standardize the load of the raw files to S3 as well to process the raw files into the DB.
-    As this is a *not* large scale process, I've used a simple mechanism to keep track of the already processed files. As you can see in the module, the function **s3_load** puts the raw file in a s3-bucket-name/dataset-name/*not_processed*/ location.
-    Once the data of a file has been processed (i.e. loaded into the database), we use the function **move_s3_file** which moves the file to s3-bucket-name/dataset-name/*processed*/
+    - As this is a *not* large scale process, I've used a simple mechanism to keep track of the already processed files. As you can see in the module, the function **s3_load** puts the raw file in a s3-bucket-name/dataset-name/*not_processed*/ location.
+    - Once the data of a file has been processed (i.e. loaded into the database), we use the function **move_s3_file** which moves the file to s3-bucket-name/dataset-name/*processed*/
 - **src**: All transformation/processing scripts that would be referenced by the Airflow dags come here.
     Ideally we would keep the following structure to keep the repo clean:
 
