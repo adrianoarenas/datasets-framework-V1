@@ -9,8 +9,11 @@ All dags and transformations scripts (dbt or python) are deployed to the EC2 ins
 
 The deployment is done via Github Actions with the [ssh deploy](https://github.com/marketplace/actions/ssh-deploy) workflow. (See the yml file [here](https://github.com/adrianoarenas/datasets-framework-V1/blob/main/.github/workflows/push-to-ec2.yml))
 
+<br/>
+
 ![GitHub_actions_diagram](https://user-images.githubusercontent.com/24966827/211224336-05276d33-d436-4cf0-99f1-6635189536b6.jpg)
 
+<br/>
 
 To set up the Github Actions deployment, 2 secrets must be added to Github Secrets:
 - EC2_SSH_KEY: ssh key to connect to the ec2 instance.
