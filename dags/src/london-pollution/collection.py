@@ -14,8 +14,6 @@ secrets = getSecrets(secret_name, region_name)
 
 bucket_name = 'adriano-portfolio-data-lake-euwest2'
 
-print(secrets)
-
 #Calling API
 api_link = 'https://api.tfl.gov.uk/AirQuality/'
 response = requests.get(api_link)
