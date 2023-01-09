@@ -4,7 +4,7 @@ import json
 import sys
 
 #Appending directory with the module
-sys.path.append('../../')
+sys.path.append('/opt/airflow/dags/')
 
 #Importing modeule + calling secrets
 from modules.s3LoadTransform import getSecrets, s3_load
