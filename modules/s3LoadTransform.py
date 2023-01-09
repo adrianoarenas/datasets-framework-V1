@@ -3,6 +3,7 @@ import json
 from datetime import datetime
 from botocore.exceptions import ClientError
 
+
 class getSecrets:
     def __init__(self, secret_name, region_name):
         self.secret_name = secret_name
@@ -28,9 +29,8 @@ class getSecrets:
         return json.loads(secret)
 
 
-def s3_load(bucket, dataset_name, json_string):
+def s3_load(dataset_name, json_string, bucket, secrets):
 
-    secrets = getSecrets(secret_name, region_name)
     access_key = secrets.secrets['accessKey']
     secret_access_key = secrets.secrets['secretAccessKey']
 
@@ -45,9 +45,8 @@ def s3_load(bucket, dataset_name, json_string):
     print(f"File {key} has been uploaded to S3")
 
 
-def list_s3_files(bucket, dataset_name):
+def list_s3_files(dataset_name, bucket, secrets):
 
-    secrets = getSecrets(secret_name, region_name)
     access_key = secrets.secrets['accessKey']
     secret_access_key = secrets.secrets['secretAccessKey']
 
@@ -62,7 +61,7 @@ def list_s3_files(bucket, dataset_name):
     return files
 
 
-def move_s3_file(bucket, dataset_name, object_name):
+def move_s3_file(bucket, dataset_name, object_name, secrets):
 
     secrets = getSecrets(secret_name, region_name)
     access_key = secrets.secrets['accessKey']
