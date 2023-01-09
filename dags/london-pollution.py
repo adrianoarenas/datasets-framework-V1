@@ -1,6 +1,6 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 from airflow import DAG
-from airflow.operators import BashOperator
+from airflow.operators.bash import BashOperator
 
 
 default_args = {
@@ -21,7 +21,7 @@ dag = DAG(
 
 collection = BashOperator(
     task_id='collection-task',
-    bash_command='python3 /home/ec2-user/data-pipeline-framework-V1/dags/src/london-pollution/collection.py',
+    bash_command='python3 /opt/airflow/dags/src/london-pollution/collection.py',
     dag=dag
 )
 
