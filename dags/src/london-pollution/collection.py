@@ -14,13 +14,15 @@ secrets = getSecrets(secret_name, region_name)
 
 bucket_name = 'adriano-portfolio-data-lake-euwest2'
 
-#Calling API
-api_link = 'https://api.tfl.gov.uk/AirQuality/'
-response = requests.get(api_link)
-json_text = response.json()
+print(secrets)
 
-#Dumping response to json
-json_string = json.dumps(json_text)
+# #Calling API
+# api_link = 'https://api.tfl.gov.uk/AirQuality/'
+# response = requests.get(api_link)
+# json_text = response.json()
 
-#Loading json to S3
-s3_load('london-pollution', json_string, bucket_name, secrets)
+# #Dumping response to json
+# json_string = json.dumps(json_text)
+
+# #Loading json to S3
+# s3_load('london-pollution', json_string, bucket_name, secrets)
