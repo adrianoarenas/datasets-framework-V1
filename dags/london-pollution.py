@@ -6,9 +6,9 @@ from airflow.operators import BashOperator
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime(2023, 1, 1, 00, 00),
+    'start_date': datetime(2023, 1, 1),
     'retries': 1,
-    'retry_delay': timedelta(minutes=3)
+    'retry_delay': timedelta(minutes=5)
 }
 
 dag = DAG(
@@ -21,8 +21,8 @@ dag = DAG(
 
 collection = BashOperator(
     task_id='collection-task',
-    bash_command='python3 /home/ec2-user/data-pipeline-framework-V1/dags/src/london-pollution/collection.py'
-    dag = dag
+    bash_command='python3 /home/ec2-user/data-pipeline-framework-V1/dags/src/london-pollution/collection.py',
+    dag=dag
 )
 
 
