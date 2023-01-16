@@ -6,16 +6,28 @@ import sys
 #Appending directory with the module
 sys.path.append('/opt/airflow/dags/')
 
-#Importing modeule + calling secrets
+#Importing modeule
 from modules.s3LoadTransform import getSecrets, s3_load
+
+#Defining Vars
 secret_name = "secrets_test"
 region_name = "eu-west-2"
+
+bucket = 'adriano-portfolio-data-lake-euwest2'
+dataset = 'london-pollution'
+
+#Calling secrets
 secrets = getSecrets(secret_name, region_name)
 
-bucket_name = 'adriano-portfolio-data-lake-euwest2'
+#API vars
+api_key = secrets.secrets['londonPollutionApiKey']
+location = 'london'
+air_quality_data = 'yes'
+
+api_link = f'http://api.weatherapi.com/v1/current.json?key={api_key}&q={location}&aqi={air_quality_data}'
+
 
 #Calling API
-api_link = 'https://api.tfl.gov.uk/AirQuality/'
 response = requests.get(api_link)
 json_text = response.json()
 
@@ -23,4 +35,4 @@ json_text = response.json()
 json_string = json.dumps(json_text)
 
 #Loading json to S3
-s3_load('london-pollution', json_string, bucket_name, secrets)
+s3_load(dataset, json_string, bucket, secrets)
