@@ -18,7 +18,7 @@ bucket = 'adriano-portfolio-data-lake-euwest2'
 dataset = 'london-pollution'
 
 #Calling Secrets
-secrets = getSecrets()
+secrets = getSecrets(secret_name, region_name)
 
 #Database Connection
 conn = psycopg2.connect(
