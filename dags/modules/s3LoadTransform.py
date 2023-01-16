@@ -82,3 +82,15 @@ def move_s3_file(bucket, dataset_name, object_name, secrets):
     print(f"File {old_name} has been moved to the processed directory (new file key: {bucket}/{new_key})")
 
 
+def call_s3_file(bucket, object_name, secrets):
+
+    access_key = secrets.secrets['accessKey']
+    secret_access_key = secrets.secrets['secretAccessKey']
+
+    s3 = boto3.resource('s3',
+                aws_access_key_id = access_key,
+                aws_secret_access_key = secret_access_key)
+
+    response = s3.Object(bucket, object_name)
+    contentBody = response.get()['Body'].read().decode('utf-8')
+    return (json.loads(contentBody))
