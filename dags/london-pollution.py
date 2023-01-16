@@ -2,6 +2,8 @@ from datetime import timedelta, datetime
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 
+proj_dir = '/opt/airflow/dags/src/london-pollution'
+modules_dir = '/opt/airflow/dags/modules'
 
 default_args = {
     'owner': 'airflow',
@@ -21,9 +23,20 @@ dag = DAG(
 
 collection = BashOperator(
     task_id='collection-task',
-    bash_command='python3 /opt/airflow/dags/src/london-pollution/collection.py',
+    bash_command=f'python3 {proj_dir}/collection.py',
     dag=dag
 )
 
+load = BashOperator(
+    task_id='load-task',
+    bash_command='python3 {proj_dir}/load.py',
+    dag=dag
+)
 
-collection
+db_transformation = BashOperator(
+    task_id='transformation-task',
+    bash_command='python3 {modules_dir}/sqlExecutor.py {proj_dir}/processing_script_1.sql',
+    dag=dag
+)
+
+collection >> load >> db_transformation
