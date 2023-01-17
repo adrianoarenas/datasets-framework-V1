@@ -63,7 +63,6 @@ def list_s3_files(dataset_name, bucket, secrets):
 
 def move_s3_file(bucket, dataset_name, object_name, secrets):
 
-    secrets = getSecrets(secret_name, region_name)
     access_key = secrets.secrets['accessKey']
     secret_access_key = secrets.secrets['secretAccessKey']
 
