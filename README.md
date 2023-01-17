@@ -5,7 +5,7 @@ Please refer first to [data-pipeline-framework-V1](https://github.com/adrianoare
 # Adding, updating and deleting datasets in the ETL framework
 ---
 
-All dags and transformations scripts (dbt or python) are deployed to the EC2 instance created in [data-pipeline-framework-V1](https://github.com/adrianoarenas/data-pipeline-framework-V1) via rsync.
+All dags and transformations scripts (SQl, python, etc) are deployed to the EC2 instance created in [data-pipeline-framework-V1](https://github.com/adrianoarenas/data-pipeline-framework-V1) via rsync.
 
 The deployment is done via Github Actions with the [ssh deploy](https://github.com/marketplace/actions/ssh-deploy) workflow. (See the yml file [here](https://github.com/adrianoarenas/datasets-framework-V1/blob/main/.github/workflows/push-to-ec2.yml))
 
