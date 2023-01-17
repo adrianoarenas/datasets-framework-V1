@@ -29,13 +29,13 @@ collection = BashOperator(
 
 load = BashOperator(
     task_id='load-task',
-    bash_command='python3 {proj_dir}/load.py',
+    bash_command=f'python3 {proj_dir}/load.py',
     dag=dag
 )
 
 db_transformation = BashOperator(
     task_id='transformation-task',
-    bash_command='python3 {modules_dir}/sqlExecutor.py {proj_dir}/processing_script_1.sql',
+    bash_command=f'python3 {modules_dir}/sqlExecutor.py {proj_dir}/processing_script_1.sql',
     dag=dag
 )
 

@@ -6,7 +6,6 @@ import psycopg2
 #Appending directory with the module
 sys.path.append('/opt/airflow/dags/')
 
-
 #Importing modeule
 from modules.s3LoadTransform import getSecrets, list_s3_files, move_s3_file, call_s3_file
 
@@ -63,3 +62,4 @@ try:
     print('Data loaded to Postgres succesfully')
 except Exception as e:
     print(f'Failed to load data to Postgres: \n {e}')
+    raise(e)
