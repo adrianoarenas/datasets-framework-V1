@@ -16,7 +16,7 @@ region_name = "eu-west-2"
 bucket = 'adriano-portfolio-data-lake-euwest2'
 dataset = 'london-pollution'
 
-#Calling secrets
+#Calling Secrets
 secrets = getSecrets(secret_name, region_name)
 
 #API vars

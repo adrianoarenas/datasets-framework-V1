@@ -2,6 +2,16 @@
 import psycopg2
 import sys
 
+from s3LoadTransform import getSecrets
+
+#Defining Vars
+secret_name = "secrets_test"
+region_name = "eu-west-2"
+
+#Calling Secrets
+secrets = getSecrets(secret_name, region_name)
+
+
 #Sys is going to be used to manually input the name of the SQL file to be run in the database
 
 #Database Connection
